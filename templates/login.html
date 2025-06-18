@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700,900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ffbb;
+            --accent-color: #7000ff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e, #0f3460);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('{{ url_for('static', filename='images/camera.jpg') }}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .background-effects::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(26, 26, 46, 0.8) 0%, rgba(15, 52, 96, 0.95) 100%);
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #0f3460, #1a1a2e);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            background: linear-gradient(45deg, #1a1a2e, #0f3460);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .register-text {
+            text-align: center;
+            margin-top: 25px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        .toggle-button {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: underline;
+            transition: all 0.3s ease;
+            padding: 0 5px;
+        }
+
+        .toggle-button:hover {
+            color: rgba(255, 255, 255, 1);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        .flash-messages {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            color: #1a1a2e;
+            padding: 12px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: fadeOut 3s forwards;
+            font-weight: 500;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects"></div>
+    <div class="particles">
+        <div class="particle" style="left: 5%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 15%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 45%; animation-delay: 6s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 8s;"></div>
+        <div class="particle" style="left: 75%; animation-delay: 10s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 12s;"></div>
+    </div>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="flash-messages">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="login-container">
+        <h1 id="form-title">Login</h1>
+        <form method="POST" action="/">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn" name="action" value="Login" id="submit-button">Login</button>
+        </form>
+        <p class="register-text" id="toggle-text">Don't have an account? 
+            <button class="toggle-button" id="toggle-button" onclick="toggleForm()">Register here.</button>
+        </p>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const formTitle = document.getElementById("form-title");
+            const submitButton = document.getElementById("submit-button");
+            const toggleText = document.getElementById("toggle-text");
+            const toggleButton = document.getElementById("toggle-button");
+
+            if (submitButton.value === "Login") {
+                formTitle.textContent = "Register";
+                submitButton.value = "Register";
+                submitButton.textContent = "Register";
+                toggleText.innerHTML = "Already have an account? <button class='toggle-button' id='toggle-button' onclick='toggleForm()'>Login here.</button>";
+            } else {
+                formTitle.textContent = "Login";
+                submitButton.value = "Login";
+                submitButton.textContent = "Login";
+                toggleText.innerHTML = "Don't have an account? <button class='toggle-button' id='toggle-button' onclick='toggleForm()'>Register here.</button>";
+            }
+        }
+    </script>
+</body>
+</html>

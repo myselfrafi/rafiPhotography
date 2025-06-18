@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700,900&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Photography Contest</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-color: #ff0055;
+            --secondary-color: #00ffbb;
+            --accent-color: #7000ff;
+        }
+
+        body {
+            background: linear-gradient(135deg, #000000, #1a1a2e);
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-effects::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.8) 100%),
+                        url('{{ url_for('static', filename='images/fashion.jpg') }}') center/cover;
+            animation: rotate 60s linear infinite;
+            opacity: 0.15;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg) scale(1.5); }
+            to { transform: rotate(360deg) scale(1.5); }
+        }
+
+        header {
+            padding: 2.5rem 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            font-size: 4.5em;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            margin: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 8s ease infinite;
+            background-size: 300% 300%;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .competition-info {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transform: translateY(0);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .competition-info::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+            transform: rotate(0deg);
+            animation: rotate-gradient 15s linear infinite;
+        }
+
+        @keyframes rotate-gradient {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .competition-info:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 55px rgba(0, 0, 0, 0.3);
+        }
+
+        .competition-info p {
+            font-size: 1.6em;
+            margin: 20px 0;
+            color: #fff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        .deadline {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 30px;
+            box-shadow: 0 10px 25px rgba(255, 0, 85, 0.3);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .deadline:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 0, 85, 0.4);
+        }
+
+        .deadline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .deadline:hover::before {
+            left: 100%;
+        }
+
+        .feature-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .feature-icon {
+            font-size: 2em;
+            color: var(--secondary-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(-50px) scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(50px) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-effects"></div>
+    
+    <header>
+        <nav style="position: absolute; top: 20px; right: 20px;">
+            {% if session.username %}
+            <a href="{{ url_for('login') }}" onclick="return confirm('Are you sure you want to logout? Thank you for participating!')" style="padding: 8px 16px; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: 5px; font-size: 14px; transition: all 0.3s ease; display: inline-block;">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+            {% endif %}
+        </nav>
+        <div class="header-content">
+            <h1>Photography Contest</h1>
+            <div class="subtitle">Capture the Moment, Win the Glory</div>
+        </div>
+    </header>
+    
+    <div class="particles">
+        <div class="particle" style="left: 5%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 15%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="particle" style="left: 45%; animation-delay: 6s;"></div>
+        <div class="particle" style="left: 60%; animation-delay: 8s;"></div>
+        <div class="particle" style="left: 75%; animation-delay: 10s;"></div>
+        <div class="particle" style="left: 90%; animation-delay: 12s;"></div>
+        <div class="particle" style="left: 25%; animation-delay: 14s;"></div>
+        <div class="particle" style="left: 55%; animation-delay: 16s;"></div>
+        <div class="particle" style="left: 85%; animation-delay: 18s;"></div>
+    </div>
+    
+    <div class="competition-info">
+        <p>Welcome to the Ultimate Photography Competition</p>
+        <p>Showcase Your Best Shots & Win Amazing Prizes</p>
+        <p class="deadline">Competition Deadline: 31/1/25</p>
+        
+        <div class="feature-icons">
+            <i class="fas fa-camera-retro feature-icon"></i>
+            <i class="fas fa-trophy feature-icon"></i>
+            <i class="fas fa-star feature-icon"></i>
+        </div>
+    </div>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

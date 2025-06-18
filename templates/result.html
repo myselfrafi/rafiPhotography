@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="result" style="text-align: center;">
+    <h2>Results for {{ username }}</h2>
+    <p>Category: {{ category }}</p>
+    <p>Your Score: {{ score }}</p>
+
+    <!-- Feedback Box -->
+    <div style="margin: 20px auto; padding: 20px; border: 2px solid #000000; background-color: #a6ccde; width: 60%; text-align: left;">
+        <h3>Feedback:</h3>
+        <p>
+            {% if score >= 70 %}
+                Outstanding performance! Your work demonstrates exceptional creativity and technical skill. Keep up the fantastic work! 
+                The way you’ve captured details and emotions is remarkable. Consider sharing your techniques with others to inspire them.
+            {% elif score >= 60 %}
+                Great job! Your photos show strong effort and good attention to detail. With a bit more refinement, you can reach the top! 
+                Experiment with different perspectives or themes to make your work stand out even more. Your passion is evident and promising.
+            {% elif score >= 50 %}
+                Nice effort! Your photography has potential. Focus on improving composition and lighting for even better results. 
+                Try analyzing top entries to understand their strengths and incorporate them into your style. Every step you take adds to your growth.
+            {% elif score >= 40 %}
+                You're on the right track! Continue practicing and exploring new techniques to enhance your skills. 
+                Look into mastering the basics, like framing and focus, to create more impactful images. Your dedication will pay off with time and effort.
+            {% else %}
+                Keep going! Every master was once a beginner. Use this experience to learn and grow your photography talents. 
+                Take inspiration from others and practice consistently to improve. Remember, persistence and passion are key to success.
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Leaderboard -->
+    <h3>Leaderboard</h3>
+    <table style="margin: 0 auto; border-collapse: collapse; width: 50%; text-align: center; border: 1px solid #ddd;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid #000000; padding: 8px;">Rank</th>
+                <th style="border: 1px solid #000000; padding: 8px;">Username</th>
+                <th style="border: 1px solid #000000; padding: 8px;">Category</th>
+                <th style="border: 1px solid #000000; padding: 8px;">Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, row in leaderboard.iterrows() %}
+            <tr>
+                <td style="border: 1px solid #000000; padding: 8px;">{{ index + 1 }}</td>
+                <td style="border: 1px solid #000000; padding: 8px;">{{ row['username'] }}</td>
+                <td style="border: 1px solid #000000; padding: 8px;">{{ row['category'] }}</td>
+                <td style="border: 1px solid #000000; padding: 8px;">{{ row['score'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
